@@ -1,0 +1,489 @@
+/* import GG font cdn link */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+
+}
+/* ******************************************** */
+body {
+    display: flex;
+}
+.sidebar{
+    position: sticky;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 115px;
+    height: 100vh;
+    padding: 0 1.7rem;
+    color: white;
+    overflow: hidden;
+    transition: all;
+    background: white;
+}
+.sidebar:hover{
+    width: 300px;
+    transition: 0.5s;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    width: 200px; /* Adjust the width as needed */
+}
+
+.logo img {
+    height: 65px;
+    width: 65px;
+    padding: 10px;
+    background-size: contain;
+    overflow: hidden;
+}
+
+.brand-name {
+    display: none; /* Initially hide the brand name */
+    color: rgb(45, 104, 196);
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 1px;
+}
+
+.sidebar:hover .logo .brand-name {
+    display: inline; /* Show the brand name when the sidebar is hovered */
+}
+
+
+
+.menu{
+    height: 88%;
+    position: relative;
+    list-style: none;
+    padding: 0;
+}
+.menu li{
+    padding: 1rem;
+    margin: 8px 0;
+    border-radius: 8px;
+    transition: all 0.5s ease-in-out;
+}
+.menu li:hover,
+.active {
+    background: rgb(45, 104, 196);
+}
+.active a,
+.menu li:hover a{
+    color: #fff !important;
+}
+.menu a{
+    color: black;
+    font-size: 14px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.menu a span{
+    overflow: hidden;
+}
+.menu a i{
+    font-size: 1.2rem;
+}
+.logout {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.logout a {
+    color: red;
+    
+}
+
+.logout.active {
+    background: red;
+}
+
+.logout:hover a,
+.logout:hover i {
+    border-radius: 8px;
+    transition: all 0.5s ease-in-out;
+    color: white !important;
+}
+
+.menu li.logout:hover {
+    background-color: red; /* Ensure the background stays red when hovered */
+}
+.supplier-items-container {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.supplier-menu {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.supplier-item {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+}
+
+.supplier-item:not(:last-child) {
+    border-right: none;
+}
+
+.supplier-item.active,
+.supplier-item:hover {
+    background: rgb(45, 104, 196);
+    color: #fff;
+    cursor: pointer;
+}
+
+/*Main body section*/
+.main--content{
+    position: relative;
+    background: #ebe9e9;
+    width: 100%;
+    padding: 1rem;
+}
+
+.header--wrapper img{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.header--wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 2rem;
+    margin-bottom: 1rem;
+}
+.header--title{
+    color: rgb(45, 104, 196);
+    font-family:  'Poppins', sans-serif;
+}
+.user--info{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.search--box{
+    background: rgb(237, 237, 237);
+    border-radius: 15px;
+    color: rgb(45, 104, 196);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+}
+.search--box input{
+    background: transparent;
+    padding: 10px;
+}
+.search--box i{
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+.search--box i:hover{
+    transform: scale(1.3);
+}
+
+/* card container */
+.card--container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* Arrange items in a column */
+}
+
+.card--wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.main--title {
+    color: rgb(45, 104, 196);
+    font-size: 15px;
+    margin-bottom: 1rem; /* Add margin at the bottom to separate from the boxes */
+}
+
+.payment--card {
+    width: 300px; /* Adjust the width of each card to fit four cards per row */
+    max-width: calc(25% - 1rem); /* Adjust the max-width of each card to fit four cards per row */
+    border-radius: 10px;
+    padding: 1rem;
+    transition: all 0.5s ease-in-out;
+    position: relative;
+}
+
+@media screen and (max-width: 1200px) {
+    .payment--card {
+        width: calc(50% - 1rem); /* Adjust the width of each card to fit two cards per row on medium screens */
+        max-width: calc(50% - 1rem); /* Adjust the max-width of each card to fit two cards per row on medium screens */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .payment--card {
+        width: calc(100% - 1rem); /* Adjust the width of each card to fit one card per row on smaller screens */
+        max-width: calc(100% - 1rem); /* Adjust the max-width of each card to fit one card per row on smaller screens */
+    }
+}
+
+.payment--card:hover {
+    transform: translateY(-5px);
+}
+
+.card--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.amount {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 600;
+    gap: 1.5rem;
+}
+
+.amount--value {
+    font-size: 34px;
+    font-family: 'Poppins';
+    font-weight: 550;
+}
+
+.icon {
+    color: white;
+    padding: 1rem;
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    background: rgb(194, 193, 193);
+}
+
+/* Qc cards */
+.qc--wrapper {
+    display: flex;
+    padding-top: 10px;
+    flex-direction: column;
+    padding: 10px; /* Add padding for spacing */
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background: #fff;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+.qcmain--title {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.qccard--container {
+    display: flex;
+    flex-wrap: wrap; /* Allow cards to wrap to the next line */
+    gap: 20px; /* Adjust the gap between cards */
+}
+
+.quick--card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: calc(50% - 20px); /* Set the width of each card to fit two cards in a row with a gap of 20px */
+    border: 1px solid #ccc; /* Add border to the card */
+    border-radius: 5px; /* Add border-radius to the card */
+    padding: 10px; /* Add padding for spacing */
+    box-sizing: border-box; /* Include padding and border in the total width */
+}
+
+.qc--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px; /* Add padding for spacing */
+    border-bottom: 1px solid #ccc; /* Add border to the title row */
+}
+
+.qc--title {
+    font-weight: bold;
+}
+.qc--button{
+    color: #fff;
+    font-size:  10px;
+    border-radius: 10px;
+    height: 20%;
+    width: 100%;
+    padding: 0.3rem;
+    background: rgb(45, 104, 196);
+}
+/* .qc--button-container {
+    display: flex;
+    align-items: center;
+} */
+
+.qc--amounts {
+    display: flex;
+    justify-content: space-between; /* Distribute elements evenly */
+}
+
+.qcamount--value1{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.qcamount--value2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.value {
+    font-weight: bold;
+    margin-bottom: 5px; /* Adjust spacing between number and content */
+}
+
+.qcamount--value1 div,
+.qcamount--value2 div {
+    margin-top: 5px;
+}
+/* Supplier */
+.sp--wrapper {
+    padding: 30px 40px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    border: none !important;
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2);
+    background-color: white;
+}
+
+.sp--wrapper .form-group {
+    margin-bottom: 20px;
+}
+
+.sp--wrapper .form-control-label {
+    margin-bottom: 0;
+}
+
+.sp--wrapper input[type="text"],
+.sp--wrapper input[type="email"] {
+    padding: 8px 15px;
+    border-radius: 5px !important;
+    margin: 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    font-size: 18px !important;
+    font-weight: 300;
+    width: 100%;
+}
+
+.sp--wrapper input[type="text"]:focus,
+.sp--wrapper input[type="email"]:focus {
+    border: 1px solid #00BCD4;
+    outline-width: 0;
+    font-weight: 400;
+}
+
+.sp--wrapper .btn-block {
+    text-transform: uppercase;
+    font-size: 15px !important;
+    font-weight: 400;
+    height: 43px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.sp--wrapper .btn-block:hover {
+    color: #fff !important;
+    background-color:  rgb(45, 104, 196);
+}
+
+.sp--wrapper button:focus {
+    outline-width: 0;
+}
+
+/*Coloer css*/
+.icon-green{
+    background: #44db65;
+}
+.icon-yellow{
+    background: #FED600;
+}
+.icon-blue{
+    background: #2390d6;
+}
+.icon-red{
+    background: #ed1b24;
+}
+.background-green{
+    background: #b7f1b7;
+}
+.background-yellow{
+    background: #ffffb7;
+}
+.background-blue{
+    background: #c5e8f2;
+}
+.background-red{
+    background: #ffc4c4;
+}
+
+.sp--wrapper .card {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+
+.sp--wrapper .table-responsive{
+    overflow-x: auto;
+}
+
+.sp--wrapper .table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.sp--wrapper .table-nowrap .table td,
+.table-nowrap .table th {
+    white-space: nowrap;
+}
+
+.table>:not(caption)>*>* {
+    padding: 0.75rem 1.25rem;
+    border-bottom-width: 1px;
+}
+
+.sp--wrapper table th {
+    font-weight: 600;
+    background-color: #eeecfd !important;
+    word-wrap: break-word;
+}
+

@@ -1,0 +1,160 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Initialize Select2
+        $('.mySelect2').select2();
+
+        $(document).on('click', '.add-btn', function () {
+            $(this).closest('.main-form').remove();
+        });
+
+
+        
+        //Proceed to place order button click
+        $(document).on('click', '.proceedToPlace', function () {
+        console.log('proceedToPlace');
+        
+        var cphone = $('#cphone').val();
+        var payment_mode = $('#payment_mode').val();
+
+        //Check if any field is empty
+        if(payment_mode == ''){
+            swal("Select Payment Method","Select your payment mode","warning");
+            return false;
+        }
+
+        if(cphone == ''){
+            swal("Enter Phone Number","Enter customer's phone number","warning");
+            return false;
+        }
+
+        var data = {
+            'proceedToPlaceBtn': true,
+            'cphone': cphone,
+            'payment_mode': payment_mode,
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "invoiceFormHandler.php",
+            data: data,
+            dataType: "json",  // Expecting JSON response from server
+            success: function (response) {
+                if(response.status == 200){
+
+                swal("Order Placed",response.message,"success")
+                .then(() => {
+                    window.location.href = 'invoiceSummary.php';
+                });
+                }else if(response.status == 404){
+                    swal("Error",response.message,response.status_type, {
+                        buttons: {
+                            catch: {
+                                text: "Add Customer",
+                                value: "catch",
+                            },
+                            cancel: "Cancel",
+                        }
+                    }) .then ((value) => {
+                        switch (value) {
+                            case "catch":
+                                $('#addCustomerModal').modal('show');
+                                // console.log('Pop the Customer Add modal');
+                                break;
+                            default:
+                                swal("Cancelled");
+                        }
+                    });
+                } else {
+                    swal("Error",response.message,response.status_type);
+                }
+            }
+        });
+    });
+
+        //Save new customer
+        $(document).on('click', '.saveCustomer', function(){
+        var c_name = '';
+        var c_phone = $('#cphone').val();
+
+        c_name = $('#c_name').val();
+        c_phone = $('#c_phone').val();
+
+        if(c_name != '' && c_phone != ''){
+            var data = {
+                'saveCustomerBtn': true,
+                'c_name': c_name,
+                'c_phone': c_phone,
+            };
+            sessionStorage.setItem('c_phone', c_phone);
+
+            $.ajax({
+                type: "POST",
+                url: "invoiceFormHandler.php",
+                data: data,
+                dataType: "json",
+                success: function (response) {
+
+                    if(response.status == 200){
+                        swal("Customer Added",response.message,"success")
+                        .then(() => {
+                            $('#addCustomerModal').modal('hide');
+                            $('#cphone').val(c_phone);
+                        });
+                    }else{
+                        swal("Error",response.message,response.status_type);
+                    }
+                }
+            });
+        } else {
+            swal("Error","Please fill all fields","warning");
+        }
+    });
+
+    //Save invoice
+    $(document).on('click', '#saveInvoice', function(){
+        $.ajax({
+            type: "POST",
+            url: "invoiceFormHandler.php",
+            data: {
+                'saveInvoiceBtn': true,
+            },
+            dataType: "json",
+            success: function (response) {
+                if(response.status == 200){
+                    swal("Invoice Saved",response.message,"success")
+                    .then(() => {
+                        window.location.href = 'invoiceSummary.php';
+                    })
+                    .then(() => {
+                        window.location.href = 'viewInvoice.php';
+                    })
+                }else{
+                    swal("Error",response.message,response.status_type);
+                }
+            }
+        });
+    });
+
+});
+
+
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let subMenu = document.getElementById("subMenu");
+        function ToggleMenu(){
+            subMenu.classList.toggle("open-menu");
+        }
+    });
+</script>
+<!-- <script src="../include/custom.js"></script> -->
+</div>
+</body>
+</html>
