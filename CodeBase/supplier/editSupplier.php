@@ -5,7 +5,7 @@ require_once('../include/databaseHandler.inc.php');
 // session_start();
 require_once('../include/config_session.inc.php');
 if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
-include('../supplier/header.html');    
+include('../supplier/header.php');    
 ?>
 
 <div class="main--content">

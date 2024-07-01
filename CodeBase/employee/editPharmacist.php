@@ -17,50 +17,38 @@ if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
             $isUpdate = isset($_POST['updatePharmacist']);
             $currentPharmacistId = $isUpdate ? validate($_POST['currentPharmacistId']) : null;
 
-            if ($username != '' && $password != '' && $fullname != '' && $email != '' && $role != '') {
-                $usernameCheck = mysqli_query($conn, "SELECT * FROM pharmacists WHERE Username='$username'");
-                $emailCheck = mysqli_query($conn, "SELECT * FROM pharmacists WHERE Email='$email'");
-                
-                if ($usernameCheck && $emailCheck) {
-                    if (mysqli_num_rows($usernameCheck) > 0) {
-                        $existingUsername = mysqli_fetch_assoc($usernameCheck);
-                        if (!$isUpdate || $existingUsername['Id'] != $currentPharmacistId) {
-                            redirect('../employee/editPharmacist.php', 'Username already used by another pharmacist account');
-                        }
-                    }
-                    if (mysqli_num_rows($emailCheck) > 0) {
-                        $existingEmail = mysqli_fetch_assoc($emailCheck);
-                        if (!$isUpdate || $existingEmail['Id'] != $currentPharmacistId) {
-                            redirect('../employee/editPharmacist.php', 'Email already used by another pharmacist account');
-                        }
-                    }
-                }
+            $pharmacist_data = [
+                'Username' => $username,
+                'Pwd' => $password,
+                'FullName' => $fullname,
+                'Email' => $email,
+                'Role' => $role,
+            ];
 
-                $pharmacist_data = [
-                    'Username' => $username,
-                    'Pwd' => $password,
-                    'FullName' => $fullname,
-                    'Email' => $email,
-                    'Role' => $role,
-                ];
+            if ($isUpdate) {
+                $result = update('pharmacists', $currentPharmacistId, $pharmacist_data);
+                header("Location: ../include/logout.inc.php");
+                exit();
 
-                if ($isUpdate) {
-                    $result = update('pharmacists', $currentPharmacistId, $pharmacist_data);
-                    $message = $result ? 'Pharmacist updated successfully' : 'Something went wrong';
-
-                    // Update session variable if the current user is updated
-                    if ($result && $_SESSION['user_username'] == $_POST['currentUsername']) {
+                // Update session variable if the current user is updated
+                if ($result) {
+                    if ($_SESSION['user_username'] == $_POST['currentUsername']) {
                         $_SESSION['user_username'] = $username;
                     }
-                } else {
-                    $result = insert('pharmacists', $pharmacist_data);
-                    $message = $result ? 'Pharmacist created successfully' : 'Something went wrong';
                 }
-
-                redirect('../employee/editPharmacist.php', $message);
+                
             } else {
-                redirect('../employee/editPharmacist.php', 'Please fill all required fields');
+                $result = insert('pharmacists', $pharmacist_data);
+                if ($result) {
+                    // If pharmacist is created successfully, log out the user
+                    header("Location: ../include/logout.inc.php");
+                    exit();
+                } else {
+                    $message = 'Something went wrong';
+                }
             }
+
+            redirect('../employee/editPharmacist.php', $message);
         }
     }
 ?>
@@ -70,11 +58,29 @@ if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
 
 <head>
     <meta charset="UTF-8">
-    <title>Pharmacy Management System</title>
-    <link rel="stylesheet" href="view_style.css">
+    <title>Pharmacy Management System - Appotheke</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <style>
+        body {
+            font-size: 1.2em; /* Increase the overall font size */
+        }
+        .form-group label {
+            font-size: 1.2em; /* Increase the label font size */
+        }
+        .form-group input {
+            font-size: 1.2em; /* Increase the input font size */
+            height: 50px; /* Increase the height of the input fields */
+        }
+        .btn-primary {
+            font-size: 1.2em; /* Increase the button font size */
+            height: 50px; /* Increase the height of the button */
+        }
+    </style>
+
 </head>
 
 <body>
@@ -86,15 +92,46 @@ if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
         </div>
         <ul class="menu">
             <li><a href="../dashboard/index.php"><i class='bx bxs-dashboard'></i><span>Dashboard</span></a></li>
-            <li><a href="../signup/index.php"><i class='bx bx-user'></i><span>Create Account</span></a></li>
-            <li><a href="../sale/addSale.php"><i class='bx bx-line-chart'></i><span>Sale</span></a></li>
+            
+            <?php if ($_SESSION['user_role'] == 'Admin') { ?>
+            <li><a href="../signup/index.php"><i class='bx bx-user-plus'></i><span>Create Account</span></a></li>
+            <?php }?>
+
+            <?php if ($_SESSION['user_role'] == 'Admin') { ?>
+            <li><a href="../sale/viewSale.php"><i class='bx bx-line-chart' ></i><span>Sale</span></a></li>
+            <?php }?>
+
+            <?php if ($_SESSION['user_role'] == 'Admin') { ?>
             <li><a href="../supplier/addSupplier.php"><i class='bx bx-package'></i><span>Suppliers</span></a></li>
-            <li><a href="../medicine/addMedicine.php"><i class='bx bxs-capsule'></i><span>Inventory</span></a></li>
-            <li><a href="../customer/addCustomer.php"><i class='bx bx-cog'></i><span>Customers</span></a></li>
-            <li><a href="../invoice/invoiceForm.php"><i class='bx bx-credit-card'></i><span>Invoices</span></a></li>
-            <li><a href="../chat/src/App.jsx"><i class='bx bx-conversation'></i><span>Messages</span></a></li>
-            <li class="active"><a href="#"><i class='bx bx-user-plus'></i><span>Employee</span></a></li>
-            <li class="logout"><a href="#"><i class='bx bx-log-out bx-rotate-180'></i><span>Logout</span></a></li>
+            <?php } ?>
+
+            <?php if ($_SESSION['user_role'] == 'Admin') { ?> 
+            <li><a href="../medicine/addMedicine.php"><i class='bx bxs-capsule' ></i><span>Inventory</span></a></li>
+            <?php }
+            else {?>
+            <li><a href="../medicine/viewMedicine.php"><i class='bx bx-capsule' ></i><span>Inventory</span></a></li>
+            <?php } ?> 
+
+            <li><a href="../customer/addCustomer.php"><i class='bx bx-street-view'></i><span>Customers</span></a></li>
+            
+            <li><a href="../invoice/invoiceForm.php"><i class='bx bx-credit-card' ></i><span>Invoices</span></a></li>
+
+            <li><a href="../newChat/chat.php"><i class='bx bx-conversation' ></i><span>Messages</span></a></li>
+
+            <?php if ($_SESSION['user_role'] == 'Admin') { ?> 
+            <li  class="active"><a href="../employee/viewPharmacist.php"><i class='bx bx-group' ></i><span>Employee</span></a></li>
+
+            <?php } ?>
+            <li class="logout">
+                <form action="../include/logout.inc.php" method="post">
+                    <button type="submit" name="logout-submit" class="logout">
+                        <a href="#">
+                            <i class='bx bx-log-out bx-rotate-180' ></i>
+                            <span>Logout</span>
+                        </a>
+                    </button>
+                </form>
+            </li>
         </ul>
     </div>
 
@@ -197,7 +234,7 @@ if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
                 <div class="row justify-content-between text-left mt-4">
                     <div class="form-group col-sm-6 flex-column d-flex">
                         <button type="submit" name="<?php echo $isEdit ? 'updatePharmacist' : 'savePharmacist'; ?>" class="btn btn-primary">
-                            <?php echo $isEdit ? 'Update Pharmacist' : 'Save Pharmacist'; ?>
+                            <?php echo $isEdit ? 'Update' : 'Save'; ?>
                         </button>
                     </div>
                 </div>
@@ -209,7 +246,7 @@ if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
 </html>
 <?php
 } else {
-    header("Location: ../index.php");
+    header("Location: ../login/index.php");
     exit();
 }
 ?>

@@ -2,6 +2,8 @@
     // Start a session in order to grab error messages
     require_once '../include/config_session.inc.php';
     require_once '../include/signup_view.inc.php';
+
+    if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
 ?>
 
 
@@ -93,4 +95,8 @@
 <?php
     //Show error/success message to user
     check_signup_errors();
+    }
+    else{
+        header("Location: ../login/index.php");
+    }
 ?>

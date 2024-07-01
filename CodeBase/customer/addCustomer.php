@@ -7,14 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $customer_name = validate($_POST['customer_name']);
         $customer_phone_number = validate($_POST['customer_phone_number']);
 
-        if ($customer_name != '') {
-            $phoneNumberCheck = mysqli_query($conn, "SELECT * FROM customers WHERE phone_number='$customer_phone_number'");
-            if ($phoneNumberCheck) {
-                if (mysqli_num_rows($phoneNumberCheck) > 0) {
-                    redirect('../customer/addCustomer.php', 'Phone already used by another customer account');
-                }
-            }
-
+        if ($customer_name != '' && $customer_phone_number != '') {
             $customer_data = [
                 'Name' => $customer_name,
                 'phone_number' => $customer_phone_number,
@@ -27,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 redirect('../customer/addCustomer.php', 'Something went wrong');
             }
         } else {
-            redirect('../customer/addCustomer.php', 'Please fill required fields');
+            redirect('../customer/addCustomer.php', 'Please fill all required fields');
         }
     }
 
@@ -36,14 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $currentCustomerName = validate($_POST['currentCustomerName']);
         $currentCustomerPhoneNumber = validate($_POST['currentCustomerPhoneNumber']);
 
-        if ($currentCustomerName != '') {
-            $phoneNumberCheck = mysqli_query($conn, "SELECT * FROM customers WHERE phone_number='$currentCustomerPhoneNumber'");
-            if ($phoneNumberCheck) {
-                if (mysqli_num_rows($phoneNumberCheck) > 0) {
-                    redirect("../customer/viewCustomer.php?Id=<?=$currentCustomerId;?>", 'Phone already used by another customer account');
-                }
-            }
-
+        if ($currentCustomerName != '' && $currentCustomerPhoneNumber != '') {
             $customer_updated_data = [
                 'Name' => $currentCustomerName,
                 'phone_number' => $currentCustomerPhoneNumber,
@@ -55,14 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 redirect('../customer/viewCustomer.php', 'Something went wrong');
             }
+        } else {
+            redirect('../customer/addCustomer.php', 'Please fill all required fields');
         }
     }
 }
 
 // session_start();
 require_once('../include/config_session.inc.php');
-if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
-include('../customer/header.html');
+if (isset($_SESSION['user_username'])) {
+include('../customer/header.php');
 ?>
 
 <div class="main--content">

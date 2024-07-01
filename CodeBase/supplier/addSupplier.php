@@ -8,19 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $supplier_phone_number = validate($_POST['supplier_phone_number']);
         $supplier_email = validate($_POST['supplier_email']);
 
-        if ($supplier_name != '' && $supplier_email != '' && $supplier_phone_number != '') {
-            $phoneNumberCheck = mysqli_query($conn, "SELECT * FROM suppliers WHERE phone_number='$supplier_phone_number'");
-            $emailCheck = mysqli_query($conn, "SELECT * FROM suppliers WHERE email='$supplier_email'");
-            
-            if ($phoneNumberCheck && $emailCheck) {
-                if (mysqli_num_rows($phoneNumberCheck) > 0) {
-                    redirect('../supplier/addSupplier.php', 'Phone already used by another supplier account');
-                }
-                if (mysqli_num_rows($emailCheck) > 0) {
-                    redirect('../supplier/addSupplier.php', 'Email already used by another supplier account');
-                }
-            }
-
+        if ($supplier_name != '' && $supplier_phone_number != '' && $supplier_email != '') {
             $supplier_data = [
                 'name' => $supplier_name,
                 'phone_number' => $supplier_phone_number,
@@ -44,19 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $currentSupplierPhoneNumber = validate($_POST['currentSupplierPhoneNumber']);
         $currentSupplierEmail = validate($_POST['currentSupplierEmail']);
 
-        if ($currentSupplierName != '' && $currentSupplierPhoneNumber != '' && $currentSupplierEmail != '') {
-            $phoneNumberCheck = mysqli_query($conn, "SELECT * FROM suppliers WHERE phone_number='$currentSupplierPhoneNumber'");
-            $emailCheck = mysqli_query($conn, "SELECT * FROM suppliers WHERE email='$currentSupplierEmail'");
-            
-            if ($phoneNumberCheck && $emailCheck) {
-                if (mysqli_num_rows($phoneNumberCheck) > 0 && mysqli_fetch_assoc($phoneNumberCheck)['id'] != $currentSupplierId) {
-                    redirect("../supplier/viewSupplier.php?Id=<?=$currentSupplierId;?>", 'Phone already used by another supplier account');
-                }
-                if (mysqli_num_rows($emailCheck) > 0 && mysqli_fetch_assoc($emailCheck)['id'] != $currentSupplierId) {
-                    redirect("../supplier/viewSupplier.php?Id=<?=$currentSupplierId;?>", 'Email already used by another supplier account');
-                }
-            }
-
+        if ($currentSupplierName != '' && $currentSupplierPhoneNumber != '' && $currentSupplierEmail != '' ) {    
             $supplier_updated_data = [
                 'name' => $currentSupplierName,
                 'phone_number' => $currentSupplierPhoneNumber,
@@ -67,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($result) {
                 redirect('../supplier/viewSupplier.php', 'Supplier updated successfully');
             } else {
-                redirect('../supplier/viewSupplier.php', 'Something went wrong');
+                redirect('../supplier/addSupplier.php', 'Please fill all required fields');
             }
         }
     }
@@ -76,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // session_start();
 require_once('../include/config_session.inc.php');
 if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
-include('../supplier/header.html');
+include('../supplier/header.php');
 ?>
 
     <div class="main--content">

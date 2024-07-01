@@ -1,15 +1,10 @@
 <?php
     require_once('../include/function.php');
-    include('header.php');
+    include('../include/databaseHandler.inc.php');
+    if (isset($_SESSION['user_username'])){
+        include('header.php');
 ?>
 
-<!-- Title -->
-<div class="supplier-items-container">
-    <ul class="supplier-menu">
-        <li class="supplier-item active"><span>Generate Invoices</span></li>
-        <li class="supplier-item"><a href="viewInvoice.php"><span>View Invoices</span></a></li>
-    </ul>
-</div>
 
 <!-- Modal to add new customer if phone number is not recognized -->
 <div class="modal fade" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -55,7 +50,6 @@
                                     <select id="medicine_name" name="medicine_name[]" class="form-select mySelect2" required>
                                         <option value="">Select medicine</option>
                                         <?php
-                                            $conn = mysqli_connect("localhost", "root", "", "appotheke");
                                             if ($conn === false) {
                                                 die("ERROR: Could not connect. " . mysqli_connect_error());
                                             }
@@ -75,12 +69,12 @@
                                 <div class="col-md-2">
                                     <div class="form-group mb-2">
                                         <label for="quantity">Quantity</label>
-                                        <input id="quantity" type="number" name="quantity[]" class="form-control" required placeholder="Enter Quantity">
+                                        <input id="quantity" type="number" name="quantity[]" class="form-control" required placeholder="Enter Quantity" min="1">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" name="save_multiple_data" class="btn btn-primary">Save Multiple Data</button>
+                        <button type="submit" name="save_multiple_data" class="btn btn-primary">Add Item to Invoice</button>
                     </form>
                 </div>
             </div>
@@ -106,7 +100,7 @@
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
+                                            <th>#NO</th>
                                             <th>Medicine Name</th>
                                             <th>Price</th>
                                             <th>Type</th>
@@ -173,3 +167,7 @@
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
 <?php
     include('footer.html');  
+    }else {
+        header("Location: ../login/index.php");
+    }
+?>

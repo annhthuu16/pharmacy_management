@@ -23,14 +23,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700" rel='stylesheet' type='text/css'>
 
-    <!-- Title -->
-    <div class="supplier-items-container">
-        <ul class="supplier-menu">
-            <li class="supplier-item active"><span>Generate Invoices</span></li>
-            <li class="supplier-item"><a href="viewInvoice.php"><span>View Invoices</span></a></li>
-        </ul>
-    </div>
-
 
     <style>
     @media print {
@@ -69,6 +61,25 @@
             margin-bottom: 10px !important; /* Add some spacing between cards */
             margin-left: 0px !important; /* Add some spacing between cards */
             margin-right: 0px !important; /* Add some spacing between cards */
+            white-space: normal !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+        }
+
+        .main--content .card div, .main--content .card span, .main--content .card p, .main--content .card h1, .main--content .card h2, .main--content .card h3, .main--content .card h4, .main--content .card h5, .main--content .card h6 {
+            white-space: normal !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+        }
+
+        .main--content table, .main--content td, .main--content th {
+            word-wrap: break-word !important;
+            white-space: normal !important;
+        }
+
+        .main--content .item-description {
+            word-wrap: break-word !important;
+            white-space: normal !important;
         }
 
         /* Hide the header and footer if they exist */
@@ -144,7 +155,17 @@
                                         <div class="text-muted text-sm-end">
                                             <div>
                                                 <h5 class="font-size-15 mb-1">Invoice No:</h5>
-                                                <p><?php echo $_SESSION['invoice_no']; ?></p>
+                                                <p>
+                                                    <?php
+                                                        $getLastInvoiceId = mysqli_query($conn, "SELECT * FROM sales ORDER BY Id DESC LIMIT 1");
+                                                        if ($getLastInvoiceId && mysqli_num_rows($getLastInvoiceId) > 0) {
+                                                            $row = mysqli_fetch_assoc($getLastInvoiceId);
+                                                            echo $row['Id'] + 1;
+                                                        } else {
+                                                            echo '1';
+                                                        }
+                                                    ?>
+                                                    </p>
                                             </div>
                                             <div class="mt-4">
                                                 <h5 class="font-size-15 mb-1">Invoice Date:</h5>

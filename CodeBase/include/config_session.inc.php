@@ -1,16 +1,16 @@
 <?php
     //Change ini settings to make system more secure
-    ini_set('session.use_only_cookies', 1);
-    ini_set('session.use_strict_mode', 1);
+    // ini_set('session.use_only_cookies', 1);
+    // ini_set('session.use_strict_mode', 1);
 
     //Session security
-    session_set_cookie_params([
-        'lifetime' => 1800,
-        'domain' => 'localhost',
-        'path' => '/',
-        'secure' => true,   //https only
-        'httponly' => true
-    ]);
+    // session_set_cookie_params([
+    //     'lifetime' => 1800,
+    //     'domain' => 'localhost',
+    //     'path' => '/',
+    //     'secure' => true,   //https only
+    //     'httponly' => true
+    // ]);
 
     //Start session cookie
     session_start();
