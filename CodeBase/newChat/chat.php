@@ -5,16 +5,16 @@
   	# database connection file
   	include '../include/databaseHandler.inc.php';
 
-  	include 'app/helpers/user.php';
-  	include 'app/helpers/chat.php';
-  	include 'app/helpers/opened.php';
+  	include 'helpers/user.php';
+  	include 'helpers/chat.php';
+  	include 'helpers/opened.php';
 
-  	include 'app/helpers/timeAgo.php';
+  	include 'helpers/timeAgo.php';
 
-  	// if (!isset($_GET['user'])) {
-  	// 	header("Location: home.php");
-  	// 	exit;
-  	// }
+  	if (!isset($_GET['user'])) {
+  		header("Location: home.php");
+  		exit;
+  	}
 
   	# Getting User data data
   	$chatWith = getUser($_GET['user'], $pdo);
@@ -33,24 +33,24 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Chat App</title>
+	<title>Appotheke</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 	<link rel="stylesheet" 
 	      href="css/style.css">
-	<link rel="icon" href="img/logo.png">
+	<!-- <link rel="icon" href="img/logo.png"> -->
+	<link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="d-flex
+			gradient
              justify-content-center
              align-items-center
              vh-100">
-    <div class="w-400 shadow p-4 rounded">
+    <div class="w-400 shadow p-4 rounded bg-white">
     	<a href="home.php"
-    	   class="fs-4 link-dark">&#8592;</a>
+    	   class="btn btn-danger"><i class='bx bx-left-arrow-alt'></i></a>
 
     	   <div class="d-flex align-items-center">
-    	   	  <!-- <img src="uploads/<?=$chatWith['p_p']?>"
-    	   	       class="w-15 rounded-circle"> -->
 
                <h3 class="display-4 fs-sm m-2">
                	  <?=$chatWith['FullName']?> <br>
@@ -106,7 +106,7 @@
 			   </div>
     	   	<?php } ?>
     	   </div>
-    	   <div class="input-group mb-3">
+    	   <div class="input-group mb-2">
     	   	   <textarea cols="3"
     	   	             id="message"
     	   	             class="form-control"></textarea>
@@ -134,7 +134,7 @@
       	message = $("#message").val();
       	if (message == "") return;
 
-      	$.post("app/ajax/insert.php",
+      	$.post("ajax/insert.php",
       		   {
       		   	message: message,
       		   	to_id: <?=$chatWith['Id']?>
@@ -151,7 +151,7 @@
       for logged in user
       **/
       let lastSeenUpdate = function(){
-      	$.get("app/ajax/update_last_seen.php");
+      	$.get("ajax/update_last_seen.php");
       }
       lastSeenUpdate();
       /** 
@@ -164,7 +164,7 @@
 
       // auto refresh / reload
       let fetchData = function(){
-      	$.post("app/ajax/getMessage.php", 
+      	$.post("ajax/getMessage.php", 
       		   {
       		   	id_2: <?=$chatWith['Id']?>
       		   },
@@ -188,6 +188,6 @@
 <?php
   }else{
   	header("Location: ../login/index.php");
-   	exit;
+   	exit();
   }
  ?>

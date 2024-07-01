@@ -5,8 +5,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
     $Username = $_POST['Username'];
     $Pwd = $_POST['Pwd'];
 
-    echo "Username: $Username, Password: $Pwd";
-
 
     try {
         // Include necessary files
@@ -55,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
         }
         
         // Redirect user to the home page
-        echo "Login successful!";
         header("Location: ../dashboard/index.php");
         // Start a session
         $newSessionId = session_create_id();

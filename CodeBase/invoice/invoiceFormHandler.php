@@ -46,7 +46,11 @@ if (isset($_POST['save_multiple_data'])) {
             } else {
                 foreach ($_SESSION['medicineItems'] as $key => $medicineSessionItem) {
                     if ($medicineSessionItem['Id'] == $row['Id']) {
-                        $_SESSION['medicineItems'][$key]['quantity'] += $quantity;
+                        // $_SESSION['medicineItems'][$key]['quantity'] += $quantity;
+                        $temporary_quantity = $_SESSION['medicineItems'][$key]['quantity'] + $quantity;
+                        if ($temporary_quantity > $row['quantity']) {
+                            redirect('invoiceForm.php', 'Only ' . $row['quantity'] . ' quantity available for ' . $row['medicine_name'] . '!');
+                        }
                     }
                 }
             }
@@ -57,6 +61,33 @@ if (isset($_POST['save_multiple_data'])) {
     redirect('invoiceForm.php', 'Items Added.');
 }
 
+if (isset($_POST['updateQuantity'])) {
+    $index = $_POST['index'];
+    $quantity = $_POST['quantity'];
+
+    if (isset($_SESSION['medicineItems'][$index])) {
+        $medicineId = $_SESSION['medicineItems'][$index]['Id'];
+        
+        // Check if the new quantity does not exceed the available quantity
+        $checkMedicine = mysqli_query($conn, "SELECT * FROM medicines WHERE Id = '$medicineId' LIMIT 1");
+        if ($checkMedicine && mysqli_num_rows($checkMedicine) > 0) {
+            $row = mysqli_fetch_assoc($checkMedicine);
+            if ($quantity > $row['quantity']) {
+                echo json_encode(['status' => 'error', 'message' => 'Only ' . $row['quantity'] . ' quantity available for ' . $row['medicine_name'] . '!']);
+                exit;
+            }
+
+            $_SESSION['medicineItems'][$index]['quantity'] = $quantity;
+            echo json_encode(['status' => 'success', 'message' => 'Quantity updated successfully.']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Medicine not found.']);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Item not found in session.']);
+    }
+    exit;
+}
+
 if (isset($_POST['proceedToPlaceBtn'])){
     $phone = validate($_POST['cphone']);
     $payment_mode = validate($_POST['payment_mode']);
@@ -65,7 +96,6 @@ if (isset($_POST['proceedToPlaceBtn'])){
     $checkCustomer = mysqli_query($conn, "SELECT * FROM customers WHERE phone_number='$phone' LIMIT 1");
     if($checkCustomer){
         if (mysqli_num_rows($checkCustomer) > 0){
-            $_SESSION['invoice_no'] = rand(100000, 999999);
             $_SESSION['cphone'] = $phone;
             $_SESSION['payment_mode'] = $payment_mode;
 

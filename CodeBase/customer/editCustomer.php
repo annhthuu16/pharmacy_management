@@ -4,8 +4,8 @@
 
     // session_start();
     require_once('../include/config_session.inc.php');
-    if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
-    include('../medicine/header.html');    
+    if (isset($_SESSION['user_username'])) {
+    include('../medicine/header.php');    
 ?>
 
     <div class="main--content">

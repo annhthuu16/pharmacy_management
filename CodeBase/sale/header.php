@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pharmacy Management System - Appotheke</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -24,7 +25,7 @@
             <?php }?>
 
             <?php if ($_SESSION['user_role'] == 'Admin') { ?>
-            <li><a href="../sale/viewSale.php"><i class='bx bx-line-chart' ></i><span>Sale</span></a></li>
+            <li class="active"><a href="../sale/viewSale.php"><i class='bx bx-line-chart' ></i><span>Sale</span></a></li>
             <?php }?>
 
             <?php if ($_SESSION['user_role'] == 'Admin') { ?>
@@ -35,12 +36,12 @@
             <li><a href="../medicine/addMedicine.php"><i class='bx bxs-capsule' ></i><span>Inventory</span></a></li>
             <?php }
             else {?>
-            <li><a href="../medicine/viewMedicine.php"><i class='bx bxs-capsule' ></i><span>Inventory</span></a></li>
+            <li><a href="../medicine/viewMedicine.php"><i class='bx bx-capsule' ></i><span>Inventory</span></a></li>
             <?php } ?> 
 
             <li><a href="../customer/addCustomer.php"><i class='bx bx-street-view'></i><span>Customers</span></a></li>
             
-            <li class="active"><a href="../invoice/invoiceForm.php"><i class='bx bx-credit-card' ></i><span>Invoices</span></a></li>
+            <li><a href="../invoice/invoiceForm.php"><i class='bx bx-credit-card' ></i><span>Invoices</span></a></li>
 
             <li><a href="../newChat/chat.php"><i class='bx bx-conversation' ></i><span>Messages</span></a></li>
 
@@ -65,7 +66,7 @@
         <div class="header--wrapper">
             <div class="header--title">
                 <h2>Hello <?php echo $_SESSION['user_username'] ?></h2>
-                <span>Invoice</span>
+                <span>Sales</span>
             </div>
             <div class="user--info">
                 <div class="search--box">

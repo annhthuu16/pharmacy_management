@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pharmacy Management System</title>
+    <title>Pharmacy Management System - Appotheke</title>
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -51,20 +51,20 @@
                     // Check if there are any errors
                     check_login_error();
                 ?>
-
-                <!-- <div class="sign-up">
+                <!-- 
+                <div class="sign-up">
                     <label>
                         <a href="../signup/index.php">Sign up Here</a>
                     </label>
-                </div> -->
+                </div>
 
-                <div class="remember-forgot">
+                <!- <div class="remember-forgot"> -->
                     <!-- <label><input type="checkbox"> Remember me </label> -->
 
-                    <label>
-                        <a href="#">Forgot Password?</a>
+                    <!-- <label>
+                        <a href="">Forgot Password?</a>
                     </label>
-                </div>
+                </div> -->
 
                 <input type="submit" class="btn btn-primary" name="submit" value="Login">
 

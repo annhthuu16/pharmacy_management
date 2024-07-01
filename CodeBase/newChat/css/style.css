@@ -1,3 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* body {
+    background: linear-gradient(120deg, #2D68C4, #16325E);
+    height: 100vh;
+} */
+
+.gradient {
+	background: linear-gradient(120deg, #2D68C4, #16325E);
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 450px;
+    background-color: white;
+    border-radius: 20px;
+}
+
 .vh-100 {
 	min-height: 100vh;
 }

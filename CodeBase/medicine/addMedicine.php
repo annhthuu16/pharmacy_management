@@ -34,21 +34,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['updateMedicine'])) {
         $currentMedicineId = validate($_POST['currentMedicineId']);
-        $medicine_name = validate($_POST['medicine_name']);
-        $price = validate($_POST['Price']);
-        $type = validate($_POST['Type']);
-        $id_supplier = validate($_POST['Id_supplier']);
-        $quantity = validate($_POST['quantity']);
-        $expiry_date = validate($_POST['expiry_date']);
+        $currentMedicineName = validate($_POST['currentMedicineName']);
+        $currentMedicinePrice = validate($_POST['currentMedicinePrice']);
+        $currentMedicineType = validate($_POST['currentMedicineType']);
+        $currentMedicineSupplierId = validate($_POST['currentMedicineSupplierId']);
+        $currentMedicineQuantity = validate($_POST['currentMedicineQuantity']);
+        $currentMedicineExpiryDate = validate($_POST['currentMedicineExpiryDate']);
 
-        if ($medicine_name != '' && $price != '' && $type != '' && $id_supplier != '' && $quantity != '' && $expiry_date != '') {
+        if ($currentMedicineName != '' && $currentMedicinePrice != '' && $currentMedicineType != '' && $currentMedicineSupplierId != '' && $currentMedicineQuantity != '' && $currentMedicineExpiryDate != '') {
             $medicine_updated_data = [
-                'medicine_name' => $medicine_name,
-                'Price' => $price,
-                'Type' => $type,
-                'Id_supplier' => $id_supplier,
-                'quantity' => $quantity,
-                'expiry_date' => $expiry_date,
+                'medicine_name' => $currentMedicineName,
+                'Price' => $currentMedicinePrice,
+                'Type' => $currentMedicineType,
+                'Id_supplier' => $currentMedicineSupplierId,
+                'quantity' => $currentMedicineQuantity,
+                'expiry_date' => $currentMedicineExpiryDate,
             ];
 
             $result = update('medicines', $currentMedicineId, $medicine_updated_data);
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 redirect('../medicine/viewMedicine.php', 'Something went wrong');
             }
         } else {
-            redirect("../medicine/viewMedicine.php?Id=<?=$currentMedicineId;?>", 'Please fill all required fields');
+            redirect('../medicine/addMedicine.php', 'Please fill all required fields');
         }
     }
 }
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // session_start();
 require_once('../include/config_session.inc.php');
 if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
-include('../medicine/header.html');
+include('../medicine/header.php');
 ?>
 
 <div class="main--content">

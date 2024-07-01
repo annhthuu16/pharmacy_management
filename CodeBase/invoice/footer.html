@@ -12,7 +12,51 @@
             $(this).closest('.main-form').remove();
         });
 
+        $(document).on('click', '.decrement', function () {
+            var quantity = $(this).closest('.qtyBox').find('.quantityInput').val();
+            if (quantity > 1) {
+                quantity--;
+                $(this).closest('.qtyBox').find('.quantityInput').val(quantity);
+                updateQuantity($(this).closest('tr').index(), quantity);
 
+            }
+            function updateQuantity(index, quantity) {
+            $.ajax({
+                type: "POST",
+                url: "invoiceFormHandler.php",
+                data: {
+                    updateQuantity: true,
+                    index: index,
+                    quantity: quantity
+                },
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+            
+        });
+
+        $(document).on('click', '.increment', function () {
+            var quantity = $(this).closest('.qtyBox').find('.quantityInput').val();
+            quantity++;
+            $(this).closest('.qtyBox').find('.quantityInput').val(quantity);
+            updateQuantity($(this).closest('tr').index(), quantity);
+            function updateQuantity(index, quantity) {
+            $.ajax({
+                type: "POST",
+                url: "invoiceFormHandler.php",
+                data: {
+                    updateQuantity: true,
+                    index: index,
+                    quantity: quantity
+                },
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+        });
         
         //Proceed to place order button click
         $(document).on('click', '.proceedToPlace', function () {
@@ -131,7 +175,7 @@
                         window.location.href = 'invoiceSummary.php';
                     })
                     .then(() => {
-                        window.location.href = 'viewInvoice.php';
+                        window.location.href = 'viewSale.php';
                     })
                 }else{
                     swal("Error",response.message,response.status_type);
@@ -139,7 +183,6 @@
             }
         });
     });
-
 });
 
 
