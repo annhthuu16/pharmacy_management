@@ -71,14 +71,14 @@
                 echo '
             <li>
                 <a href="../medicine/addMedicine.php">
-                    <i class="bx bxs-capsule"></i>
+                    <i class="bx bx-package"></i>
                     <span>Inventory</span>
                 </a>
             </li>';
             } else {
                 echo '<li>
                 <a href="../medicine/viewMedicine.php">
-                    <i class="bx bxs-capsule"></i>
+                    <i class="bx bx-package"></i>
                     <span>Inventory</span>
                 </a>
             </li>';

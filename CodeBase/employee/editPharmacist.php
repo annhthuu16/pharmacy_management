@@ -10,7 +10,7 @@ if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['savePharmacist']) || isset($_POST['updatePharmacist'])) {
             $username = validate($_POST['Username'] ?? $_POST['currentUsername']);
-            $password = validate($_POST['Pwd'] ?? $_POST['currentPassword']);
+            // $password = validate($_POST['Pwd'] ?? $_POST['currentPassword']);
             $fullname = validate($_POST['FullName'] ?? $_POST['currentFullname']);
             $email = validate($_POST['Email'] ?? $_POST['currentEmail']);
             $role = validate($_POST['Role'] ?? $_POST['currentRole']);
@@ -19,7 +19,7 @@ if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
 
             $pharmacist_data = [
                 'Username' => $username,
-                'Pwd' => $password,
+                // 'Pwd' => $password,
                 'FullName' => $fullname,
                 'Email' => $email,
                 'Role' => $role,
@@ -186,58 +186,77 @@ if (isset($_SESSION['user_username']) && $_SESSION['user_role'] == 'Admin') {
                 <input type="hidden" name="currentPharmacistId" value="<?=$currentPharmacist['Id']; ?>" required>
                 <?php } ?>
 
-                <div class="row justify-content-between text-left">
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                        <label class="form-control-label px-3">Username
-                            <span class="text-danger"> *</span>
-                        </label>
-                        <input type="text" name="<?php echo $isEdit ? 'currentUsername' : 'Username'; ?>" value="<?php echo $isEdit ? $currentPharmacist['Username'] : ''; ?>" placeholder="Enter pharmacist's username" required>
-                    </div>
-                </div>
-                <div class="row justify-content-between text-left">
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                        <label class="form-control-label px-3">Password
-                            <span class="text-danger"> *</span>
-                        </label>
-                        <input type="text" name="<?php echo $isEdit ? 'currentPassword' : 'Pwd'; ?>" value="<?php echo $isEdit ? $currentPharmacist['Pwd'] : ''; ?>" placeholder="Enter pharmacist's password" required>
-                    </div>
-                </div>
-                <div class="row justify-content-between text-left">
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                        <label class="form-control-label px-3">Full Name
-                            <span class="text-danger"> *</span>
-                        </label>
-                        <input type="text" name="<?php echo $isEdit ? 'currentFullname' : 'FullName'; ?>" value="<?php echo $isEdit ? $currentPharmacist['FullName'] : ''; ?>" placeholder="Enter pharmacist's full name" required>
-                    </div>
-                </div>
-                <div class="row justify-content-between text-left">
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                        <label class="form-control-label px-3">Email
-                            <span class="text-danger"> *</span>
-                        </label>
-                        <input type="email" name="<?php echo $isEdit ? 'currentEmail' : 'Email'; ?>" value="<?php echo $isEdit ? $currentPharmacist['Email'] : ''; ?>" placeholder="Enter pharmacist's email" required>
-                    </div>
-                </div>
-                <div class="row justify-content-between text-left">
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                        <label class="form-control-label px-3">Role
-                            <span class="text-danger"> *</span>
-                        </label>
-                        <select name="<?php echo $isEdit ? 'currentRole' : 'Role'; ?>" required>
-                            <option value="">Select Role</option>
-                            <option value="Admin" <?php echo ($isEdit && $currentPharmacist['Role'] == 'Admin') ? 'selected' : ''; ?>>Admin</option>
-                            <option value="Pharmacist" <?php echo ($isEdit && $currentPharmacist['Role'] == 'Pharmacist') ? 'selected' : ''; ?>>Pharmacist</option>
-                        </select>
-                    </div>
-                </div>
 
-                <div class="row justify-content-between text-left mt-4">
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                        <button type="submit" name="<?php echo $isEdit ? 'updatePharmacist' : 'savePharmacist'; ?>" class="btn btn-primary">
-                            <?php echo $isEdit ? 'Update' : 'Save'; ?>
-                        </button>
-                    </div>
-                </div>
+
+
+<div class="row justify-content-between text-left">
+    <div class="form-group flex-column d-flex" style="width: 100%;">
+        <label class="form-control-label px-3">Username
+            <span class="text-danger"> *</span>
+        </label>
+        <div>
+            <input type="text" name="<?php echo $isEdit ? 'currentUsername' : 'Username'; ?>" value="<?php echo $isEdit ? $currentPharmacist['Username'] : ''; ?>" placeholder="Enter pharmacist's username" required style="width: 100%; border: 1px solid #ccc; padding: 10px;">
+        </div>
+    </div>
+</div>
+<!-- <div class="row justify-content-between text-left">
+    <div class="form-group flex-column d-flex" style="width: 100%;">
+        <label class="form-control-label px-3">Password
+            <span class="text-danger"> *</span>
+        </label>
+        <div>
+            <input type="text" name="<?php echo $isEdit ? 'currentPassword' : 'Pwd'; ?>" value="<?php echo $isEdit ? $currentPharmacist['Pwd'] : ''; ?>" placeholder="Enter pharmacist's password" required style="width: 100%; border: 1px solid #ccc; padding: 10px;">
+        </div>
+    </div>
+</div> -->
+<div class="row justify-content-between text-left">
+    <div class="form-group flex-column d-flex" style="width: 100%;">
+        <label class="form-control-label px-3">Full Name
+            <span class="text-danger"> *</span>
+        </label>
+        <div>
+            <input type="text" name="<?php echo $isEdit ? 'currentFullname' : 'FullName'; ?>" value="<?php echo $isEdit ? $currentPharmacist['FullName'] : ''; ?>" placeholder="Enter pharmacist's full name" required style="width: 100%; border: 1px solid #ccc; padding: 10px;">
+        </div>
+    </div>
+</div>
+<div class="row justify-content-between text-left">
+    <div class="form-group flex-column d-flex" style="width: 100%;">
+        <label class="form-control-label px-3">Email
+            <span class="text-danger"> *</span>
+        </label>
+        <div>
+            <input type="email" name="<?php echo $isEdit ? 'currentEmail' : 'Email'; ?>" value="<?php echo $isEdit ? $currentPharmacist['Email'] : ''; ?>" placeholder="Enter pharmacist's email" required style="width: 100%; border: 1px solid #ccc; padding: 10px;">
+        </div>
+    </div>
+</div>
+<div class="row justify-content-between text-left">
+    <div class="form-group flex-column d-flex" style="width: 100%;">
+        <label class="form-control-label px-3">Role
+            <span class="text-danger"> *</span>
+        </label>
+        <div>
+            <select name="<?php echo $isEdit ? 'currentRole' : 'Role'; ?>" required style="width: 100%; border: 1px solid #ccc; padding: 10px;">
+                <option value="">Select Role</option>
+                <option value="Admin" <?php echo ($isEdit && $currentPharmacist['Role'] == 'Admin') ? 'selected' : ''; ?>>Admin</option>
+                <option value="Pharmacist" <?php echo ($isEdit && $currentPharmacist['Role'] == 'Pharmacist') ? 'selected' : ''; ?>>Pharmacist</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+
+    
+
+<div class="row justify-content-center text-center mt-4">
+    <div class="form-group flex-column d-flex" style="width: 100%;">
+        <button type="submit" name="<?php echo $isEdit ? 'updatePharmacist' : 'savePharmacist'; ?>" class="btn btn-primary" style="width: 100%; background-color: rgb(45, 104, 196); border: none; padding: 10px 15px; color: white; font-size: 1.2em;">
+            <?php echo $isEdit ? 'Update' : 'Save'; ?>
+        </button>
+    </div>
+</div>
+
+
             </div>
         </form>
     </div>

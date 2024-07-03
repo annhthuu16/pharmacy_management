@@ -5,7 +5,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
     $Username = $_POST['Username'];
     $Pwd = $_POST['Pwd'];
 
-
     try {
         // Include necessary files
         require_once 'databaseHandler.inc.php';

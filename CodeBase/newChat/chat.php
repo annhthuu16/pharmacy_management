@@ -11,10 +11,10 @@
 
   	include 'helpers/timeAgo.php';
 
-  	if (!isset($_GET['user'])) {
-  		header("Location: home.php");
-  		exit;
-  	}
+  	// if (!isset($_GET['user'])) {
+  	// 	header("Location: home.php");
+  	// 	exit;
+  	// }
 
   	# Getting User data data
   	$chatWith = getUser($_GET['user'], $pdo);
@@ -188,6 +188,6 @@
 <?php
   }else{
   	header("Location: ../login/index.php");
-   	exit();
+   	exit;
   }
  ?>

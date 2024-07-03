@@ -1,6 +1,6 @@
 <?php
     require_once('../include/function.php');
-    include('../include/databaseHandler.inc.php');
+    require_once('../include/databaseHandler.inc.php');
     if (isset($_SESSION['user_username'])){
         include('header.php');
 ?>
