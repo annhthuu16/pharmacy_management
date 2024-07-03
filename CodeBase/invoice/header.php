@@ -35,7 +35,7 @@
             <li><a href="../medicine/addMedicine.php"><i class='bx bxs-capsule' ></i><span>Inventory</span></a></li>
             <?php }
             else {?>
-            <li><a href="../medicine/viewMedicine.php"><i class='bx bxs-capsule' ></i><span>Inventory</span></a></li>
+            <li><a href="../medicine/viewMedicine.php"><i class='bx bx-capsule' ></i><span>Inventory</span></a></li>
             <?php } ?> 
 
             <li><a href="../customer/addCustomer.php"><i class='bx bx-street-view'></i><span>Customers</span></a></li>

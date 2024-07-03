@@ -145,7 +145,10 @@ if (isset($_SESSION['user_username'])) {
                                     <tr class="align-middle">
                                         <td><?= $offset + $key + 1; ?></td>
                                         <td><?= $medicine['medicine_name']; ?></td>
-                                        <td><?= $medicine['Price']; ?></td>
+                                        <td>
+                                            <?php echo '$'; ?>
+                                            <?= $medicine['Price']; ?>
+                                        </td>
                                         <td><?= $medicine['Type']; ?></td>
                                         <td><?= $medicine['Id_supplier']; ?></td>
                                         <td><?= $medicine['quantity']; ?></td>

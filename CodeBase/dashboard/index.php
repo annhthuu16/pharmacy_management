@@ -43,7 +43,7 @@
             <li><a href="../medicine/addMedicine.php"><i class='bx bxs-capsule' ></i><span>Inventory</span></a></li>
             <?php }
             else {?>
-            <li><a href="../medicine/viewMedicine.php"><i class='bx bxs-capsule' ></i><span>Inventory</span></a></li>
+            <li><a href="../medicine/viewMedicine.php"><i class='bx bx-capsule' ></i><span>Inventory</span></a></li>
             <?php } ?> 
 
             <li><a href="../customer/addCustomer.php"><i class='bx bx-street-view'></i><span>Customers</span></a></li>
@@ -111,6 +111,7 @@
                             </span>
                             <span class="amount--value">
                             <?php
+                                echo '$';
                                 $money = mysqli_query($conn, "SELECT SUM(total) as totalSum FROM sales");
                                 if($money) {
                                     $result = mysqli_fetch_assoc($money);
